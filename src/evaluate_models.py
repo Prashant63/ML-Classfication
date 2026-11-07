@@ -9,12 +9,22 @@ import joblib
 import matplotlib
 import pandas as pd
 
-from evaluation_utils import (
-    MODEL_DISPLAY_NAMES,
-    calculate_evaluation,
-    create_classification_report,
-    create_confusion_matrix,
-)
+try:
+    # Used when imported as src.evaluate_models by the Jupyter notebook.
+    from .evaluation_utils import (
+        MODEL_DISPLAY_NAMES,
+        calculate_evaluation,
+        create_classification_report,
+        create_confusion_matrix,
+    )
+except ImportError:
+    # Used when run directly with: python src/evaluate_models.py
+    from evaluation_utils import (
+        MODEL_DISPLAY_NAMES,
+        calculate_evaluation,
+        create_classification_report,
+        create_confusion_matrix,
+    )
 
 
 # This script writes figures to files, so it does not need a desktop display.
