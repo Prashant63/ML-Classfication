@@ -8,12 +8,6 @@ __pycache__/
 data/raw/
 data/train_data.csv
 
-# Generated artifacts are added intentionally after validation
-model/*.joblib
-results/*.csv
-results/*.json
-results/*.png
-
 # Streamlit and operating-system files
 .streamlit/secrets.toml
 .DS_Store
