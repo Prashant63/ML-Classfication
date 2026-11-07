@@ -99,7 +99,11 @@ To execute the explanatory notebook locally, install Jupyter in the same environ
 
 ## 8. Streamlit Community Cloud deployment
 
-The local app has been validated. After the repository commits are pushed, deploy it in Streamlit Community Cloud by selecting this repository's `main` branch and `app.py` entry point. The live link should be added here and to the final single-PDF submission only after deployment succeeds.
+The application is deployed on Streamlit Community Cloud:
+
+[Open the live Activity Classification Lab](https://prashant-2026aj05010-ml-classfication-ageal8haneatscnhp3q3fn.streamlit.app/)
+
+The app deploys from this repository's `main` branch with `app.py` as its entry point.
 
 ## 9. Reproducibility and academic integrity
 
