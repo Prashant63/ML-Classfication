@@ -35,8 +35,11 @@ def download_and_extract_dataset() -> Path:
         return EXTRACTED_DATASET
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    print("Downloading the UCI HAR dataset...")
-    urllib.request.urlretrieve(UCI_DATASET_URL, ARCHIVE_PATH)
+    if not ARCHIVE_PATH.exists():
+        print("Downloading the UCI HAR dataset...")
+        urllib.request.urlretrieve(UCI_DATASET_URL, ARCHIVE_PATH)
+    else:
+        print("Using the existing UCI HAR archive.")
 
     print("Extracting the archive...")
     with zipfile.ZipFile(ARCHIVE_PATH) as archive:
@@ -48,17 +51,20 @@ def download_and_extract_dataset() -> Path:
 
 
 def read_feature_names(dataset_directory: Path) -> list[str]:
-    """Read the 561 original sensor-feature names in their source order."""
+    """Read the 561 sensor features and make every CSV header unambiguous."""
     feature_table = pd.read_csv(
         dataset_directory / "features.txt",
         sep=r"\s+",
         header=None,
         names=["index", "feature_name"],
     )
-    feature_names = feature_table["feature_name"].tolist()
-    if len(feature_names) != len(set(feature_names)):
-        raise ValueError("Feature names should be unique before creating the CSV files.")
-    return feature_names
+    # A few descriptive names occur more than once in the UCI source. Prefixing
+    # each name with its documented feature number preserves the source label
+    # while guaranteeing that pandas and the uploaded CSV have unique columns.
+    return [
+        f"feature_{feature_index:03d}_{feature_name}"
+        for feature_index, feature_name in feature_table.itertuples(index=False)
+    ]
 
 
 def read_activity_labels(dataset_directory: Path) -> dict[int, str]:
