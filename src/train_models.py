@@ -61,8 +61,15 @@ def build_models() -> dict[str, Pipeline | DecisionTreeClassifier | GaussianNB]:
         "support_vector_machine": Pipeline(
             [
                 ("scaler", StandardScaler()),
-                # decision_function supplies the class scores needed for multiclass AUC.
-                ("classifier", SVC(C=2.0, kernel="rbf", gamma="scale", random_state=RANDOM_STATE)),
+                (
+                    "classifier",
+                    SVC(
+                        C=2.0,
+                        kernel="rbf",
+                        gamma="scale",
+                        random_state=RANDOM_STATE,
+                    ),
+                ),
             ]
         ),
     }
